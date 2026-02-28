@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>URL Shortener Pro</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1> Acortador de URLs</h1>
+    <h2 class="subtitle">Insights Dashboard</h2> 
+
+    <div class="input-group">
+      <input type="text" id="urlInput" placeholder="Pega tu URL aquí..." />
+      <button class="btn-primary" onclick="shorten()">Acortar</button>
+    </div>
+
+    <div id="result"></div>
+    <br>
+    <button class="btn-success btn-toggle" onclick="toggleReports()">
+      Ver Reportes
+    </button>
+  </div>
+
+  <section id="globalReportsSection" class="reports-section">
+    <header class="reports-header">
+      <h2 class="reports-title"> Top de URLs y Búsqueda</h2>
+      <button class="btn-export" onclick="downloadCSV()">📥 Exportar CSV</button>
+    </header>
+    
+    <div class="report-controls">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Buscar URL original o codigo..." onkeyup="updateGlobalReports()">
+
+      <div class="filter-group">
+        <label>Ordenar:</label>
+        <select id="sortSelect" class="select-style" onchange="updateGlobalReports()">
+          <option value="clicks">Más visitados</option>
+          <option value="url">Nombre (A-Z)</option>
+        </select>
+      </div>
+
+      <button class="btn-success" onclick="updateGlobalReports()"> Refrescar</button>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr class="table-header">
+            <th>URL Original</th>
+            <th class="text-center">Versiones</th>
+            <th>Clics</th>
+          </tr>
+        </thead>
+        <tbody id="reportsTableBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>

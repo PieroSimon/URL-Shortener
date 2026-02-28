@@ -1,0 +1,253 @@
+
+:root {
+    --bg-dark: #0f172a;
+    --bg-card: #1e293b;
+    --bg-details: #111827;
+    --bg-code-item: #1a202c;
+    
+    --blue-primary: #3b82f6;
+    --green-success: #10b981;
+    --yellow-accent: #facc15;
+    --red-error: #f87171;
+    
+    --text-main: #ffffff;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --border-inner: #1f2937;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    line-height: 1.5;
+}
+
+/* CONTENEDOR SHORTENER)*/
+.container {
+    background-color: var(--bg-card);
+    padding: 30px;
+    border-radius: 12px;
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+    color: var(--blue-primary);
+    margin-top: -10px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+/* Inputs y Botones Generales */
+input {
+    padding: 12px;
+    width: 250px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background-color: var(--bg-dark);
+    color: white;
+    font-size: 1em;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.btn-primary { background-color: var(--blue-primary); color: white; }
+.btn-success { background-color: var(--green-success); color: white; }
+
+.btn-export {
+    background-color: #6366f1; /* Un color púrpura/índigo elegante */
+    color: white;
+    padding: 8px 16px;
+    border-radius: 6px;
+    font-size: 0.85em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.btn-export:hover {
+    background-color: #4f46e5;
+    transform: translateY(-1px);
+}
+/* Estilos del resultado (QR y Link) */
+.short-url-link {
+    color: var(--blue-primary);
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.2em;
+}
+
+.qr-code-img {
+    border-radius: 8px;
+    margin-top: 15px;
+    border: 4px solid white;
+    background: white;
+}
+
+/*SECCIÓN DE REPORTES (DASHBOARD) */
+.reports-section {
+    display: none; /* Controlado por JS */
+    width: 100%;
+    max-width: 850px;
+    margin-top: 40px;
+    background-color: var(--bg-card);
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid var(--blue-primary);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+}
+
+.reports-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.report-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.search-bar { flex: 1; min-width: 200px; }
+
+.select-style {
+    background-color: var(--bg-dark);
+    color: white;
+    border: 1px solid var(--border-color);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+/*TABLA DE DATOS*/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.table-header {
+    border-bottom: 2px solid var(--border-color);
+    color: var(--text-muted);
+    font-size: 0.9em;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+th, td { padding: 15px; text-align: left; }
+
+.report-row {
+    cursor: pointer;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.report-row:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.truncate-text {
+    max-width: 250px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ESTILOS DE DESGLOSE (DRILL-DOWN) */
+.hidden-row { display: none; }
+.no-padding { padding: 0 !important; }
+
+.detail-header {
+    padding: 15px 25px;
+    background-color: var(--bg-details);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.detail-label {
+    color: var(--text-muted);
+    font-size: 0.75em;
+    margin: 0 0 5px 0;
+    font-weight: bold;
+}
+
+.detail-link {
+    color: var(--blue-primary);
+    text-decoration: none;
+    word-break: break-all;
+}
+
+.code-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 25px;
+    background-color: var(--bg-code-item);
+    border-bottom: 1px solid var(--border-inner);
+}
+
+.code-text {
+    color: var(--yellow-accent);
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+}
+
+.click-count { color: var(--green-success); font-weight: bold; }
+.click-total { color: var(--green-success); font-weight: bold; }
+.date-text, .muted-text { color: var(--text-muted); }
+.error-text { color: var(--red-error); text-align: center; }
+.text-center { text-align: center; }
+
+/* Contenedor del item de cada código */
+.code-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: #1a202c;
+    border-bottom: 1px solid #1f2937;
+    transition: background 0.3s;
+}
+
+/* Clases de utilidad para las columnas del desglose */
+.code-col-main { flex: 1; }
+.code-col-stats { flex: 1; text-align: center; }
+.code-col-dates { 
+    flex: 2; 
+    text-align: right; 
+    font-size: 0.8em; 
+    color: #94a3b8; 
+}
+
+/* Colores dinámicos para el estado del clic */
+.status-active { color: #10b981; } /* Verde si hay actividad */
+.status-inactive { color: #64748b; } /* Gris si no hay */
+
+/* Estilo de resaltado cuando se busca un código */
+.highlighted-code {
+    background: #334155 !important;
+    border-left: 4px solid #facc15;
+}
