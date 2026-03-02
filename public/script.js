@@ -10,14 +10,19 @@ async function shorten() {
     });
 
     const data = await response.json();
+    console.log("Datos recibidos del servidor:", data); 
+
     if (!response.ok) {
       resultDiv.innerHTML = `<p class="error-text">❌ ${data.error}</p>`;
       return;
     }
 
-    // TRUCO: Construimos la URL completa usando el dominio actual
-    const baseUrl = window.location.origin; 
-    const finalShortUrl = `${baseUrl}/${data.shortCode}`;
+    // Usamos el dominio actual del navegador (Render o localhost)
+    const baseUrl = window.location.origin;
+
+    // Buscamos el código en cualquier formato que venga del servidor
+    const code = data.shortCode || data.short_code || data.shortUrl?.split('/').pop();
+    const finalShortUrl = `${baseUrl}/${code}`;
 
     resultDiv.innerHTML = `
       <p>URL Corta:</p>
@@ -30,15 +35,15 @@ async function shorten() {
 
     document.getElementById("copyBtn").onclick = () => { 
       navigator.clipboard.writeText(finalShortUrl);
-      alert("Enlace copiado 🚀");
+      alert("Enlace copiado ");
     };
   } catch (error) {
-    resultDiv.innerHTML = `<p class="error-text">❌ Error de conexión</p>`;
+    console.error("Error en shorten:", error);
+    resultDiv.innerHTML = `<p class="error-text"> Error de conexión</p>`;
   }
 }
 
-// Actualiza la llamada en updateGlobalReports para pasar el searchTerm
-// onclick="toggleDetails('${url.original_url}', ${index}, '${searchTerm}')"
+// --- Resto de funciones de Reportes e Insights ---
 
 async function toggleDetails(url, rowId, searchTerm = "") {
   const detailRow = document.getElementById(`details-${rowId}`);
@@ -77,7 +82,7 @@ async function toggleDetails(url, rowId, searchTerm = "") {
       return `
         <div class="code-item ${isMatch ? 'highlighted-code' : ''}">
           <div class="code-col-main">
-            <span class="code-text">${isMatch ? ''  : ''}${c.short_code}</span>
+            <span class="code-text">${c.short_code}</span>
           </div>
           <div class="code-col-stats">
             <span class="click-count">${c.clicks} clics</span>
@@ -98,7 +103,7 @@ async function toggleDetails(url, rowId, searchTerm = "") {
     console.error("Error en detalles:", error);
   }
 }
- 
+
 async function updateGlobalReports() {
   const sortBy = document.getElementById("sortSelect").value;
   const searchTerm = document.getElementById("searchInput").value;
@@ -133,7 +138,7 @@ async function updateGlobalReports() {
       `;
     });
     if (data.length === 1 && searchTerm.length >= 4) {
-    toggleDetails(data[0].original_url, 0, searchTerm);
+      toggleDetails(data[0].original_url, 0, searchTerm);
     }
   } catch (error) {
     tableBody.innerHTML = `<tr><td colspan="3" class="error-text">Error de servidor</td></tr>`;
@@ -150,7 +155,6 @@ function toggleReports() {
   }
 }
 
-// CSV (EN PRUEBA)
 async function downloadCSV() {
   const tableBody = document.getElementById("reportsTableBody");
   const rows = Array.from(tableBody.querySelectorAll(".report-row"));
@@ -167,12 +171,9 @@ async function downloadCSV() {
 
       details.forEach(c => {
         const fechaCreacion = new Date(c.created_at).toLocaleDateString();
-        
-        // LIMPIEZA DE FECHA: Usamos un formato ISO o limpiamos los caracteres no deseados
         let ultimoClic = "Sin actividad";
         if (c.last_click) {
           const dateObj = new Date(c.last_click);
-          // Formato: DD/MM/YYYY HH:mm:ss (Evitamos el a.m./p.m. problemático)
           const dia = String(dateObj.getDate()).padStart(2, '0');
           const mes = String(dateObj.getMonth() + 1).padStart(2, '0');
           const anio = dateObj.getFullYear();
@@ -180,7 +181,6 @@ async function downloadCSV() {
           const min = String(dateObj.getMinutes()).padStart(2, '0');
           ultimoClic = `${dia}/${mes}/${anio} ${hora}:${min}`;
         }
-
         csvRows.push(`"${originalUrl.replace(/"/g, '""')}";"${c.short_code}";"${c.clicks}";"${fechaCreacion}";"${ultimoClic}"`);
       });
     } catch (error) {
@@ -188,19 +188,15 @@ async function downloadCSV() {
     }
   }
 
-  // BOM y SEP para que Excel no tenga excusas
   const BOM = "\uFEFF"; 
   const SEP = "sep=;\n"; 
   const csvContent = BOM + SEP + headers.join(";") + "\n" + csvRows.join("\n");
-
   const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
-  
   const fechaHoy = new Date().toISOString().split('T')[0];
   link.setAttribute("href", url);
-  link.setAttribute("download", `Reportes_${fechaHoy}.csv`);
-  
+  link.setAttribute("download", `Reportes_Insights_${fechaHoy}.csv`);
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);

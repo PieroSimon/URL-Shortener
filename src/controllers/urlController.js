@@ -12,18 +12,28 @@ exports.shortenUrl = async (req, res) => {
       return res.status(400).json({ error: "Esta URL no es valida, ejem: https://www.google.com/" }); 
     }
 
+    // 1. Generamos el código único
     const shortCode = nanoid(6); 
 
+    // 2. Guardamos en la base de datos
     await pool.query(
       "INSERT INTO urls (original_url, short_code) VALUES ($1, $2)", 
       [originalUrl, shortCode]
     );
 
-    const shortUrl = `${process.env.BASE_URL}/${shortCode}`; 
-    const qrCode = await QRCode.toDataURL(shortUrl); 
+    // 3. Generamos el QR (usando el código corto)
+    // Usamos una URL temporal para el QR o solo el código
+    const qrCode = await QRCode.toDataURL(shortCode); 
 
-    res.json({ originalUrl, shortUrl, qr: qrCode }); 
+    // 4. RESPUESTA CLAVE: Enviamos el shortCode por separado
+    res.json({ 
+      originalUrl, 
+      shortCode,  // <-- Esto es lo que tu frontend necesita para no decir "undefined"
+      qr: qrCode 
+    }); 
+
   } catch (error) { 
+    console.error(error); // Siempre es bueno ver el error en la consola de Render
     res.status(500).json({ error: "Error interno" }); 
   }
 };
