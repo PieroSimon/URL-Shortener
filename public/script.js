@@ -15,9 +15,13 @@ async function shorten() {
       return;
     }
 
+    // TRUCO: Construimos la URL completa usando el dominio actual
+    const baseUrl = window.location.origin; 
+    const finalShortUrl = `${baseUrl}/${data.shortCode}`;
+
     resultDiv.innerHTML = `
       <p>URL Corta:</p>
-      <a href="${data.shortUrl}" target="_blank" class="short-url-link">${data.shortUrl}</a>
+      <a href="${finalShortUrl}" target="_blank" class="short-url-link">${finalShortUrl}</a>
       <br><br>
       <button id="copyBtn" class="btn-primary">Copiar</button>
       <br><br>
@@ -25,7 +29,7 @@ async function shorten() {
     `; 
 
     document.getElementById("copyBtn").onclick = () => { 
-      navigator.clipboard.writeText(data.shortUrl);
+      navigator.clipboard.writeText(finalShortUrl);
       alert("Enlace copiado 🚀");
     };
   } catch (error) {
@@ -195,7 +199,7 @@ async function downloadCSV() {
   
   const fechaHoy = new Date().toISOString().split('T')[0];
   link.setAttribute("href", url);
-  link.setAttribute("download", `Reporte_Detallado_Insights_${fechaHoy}.csv`);
+  link.setAttribute("download", `Reportes_${fechaHoy}.csv`);
   
   document.body.appendChild(link);
   link.click();

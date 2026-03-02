@@ -45,4 +45,4 @@ Inicia el servidor:
 El servidor estará corriendo en http://localhost:3000.
 
 Nota
-Este proyecto se bbasa en una aplicación siguiendo el patrón MVC, gestionar bases de datos relacionales y conectar el frontend con servicios backend de forma asíncrona.
+Este proyecto se bbasa en una aplicación que busca seguir el patrón MVC, gestionar bases de datos relacionales y conectar el frontend con servicios backend de forma asíncrona.
