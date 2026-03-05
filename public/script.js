@@ -30,7 +30,7 @@ async function shorten() {
 
         document.getElementById("copyBtn").onclick = () => { 
             navigator.clipboard.writeText(finalShortUrl);
-            alert("Enlace copiado 🚀");
+            alert("Enlace copiado ");
         };
     } catch (error) {
         resultDiv.innerHTML = `<p class="error-text">❌ Error de conexión</p>`;
@@ -54,7 +54,7 @@ async function toggleDetails(url, rowId, searchTerm = "") {
         const urlHeader = `
             <div class="detail-header">
                 <p class="detail-label">URL COMPLETA:</p>
-                <a href="${url}" target="_blank" class="detail-link">${url} 🔗</a>
+                <a href="${url}" target="_blank" class="detail-link">${url} </a>
             </div>
         `;
 
@@ -69,7 +69,7 @@ async function toggleDetails(url, rowId, searchTerm = "") {
                     <div class="code-col-main">
                         <span class="code-text">${c.short_code}</span>
                         <button onclick="event.stopPropagation(); showQR('${c.short_code}')" class="btn-qr-small">
-                            🖼️ QR
+                            VER QR
                         </button>
                     </div>
                     <div class="code-col-stats">
