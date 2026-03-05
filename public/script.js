@@ -17,10 +17,10 @@ async function shorten() {
       return;
     }
 
-    // Usamos el dominio actual del navegador (Render o localhost)
+    // Se usa el dominio actual del navegador (Render o localhost)
     const baseUrl = window.location.origin;
 
-    // Buscamos el código en cualquier formato que venga del servidor
+    // Busca el código en cualquier formato que venga del servidor
     const code = data.shortCode || data.short_code || data.shortUrl?.split('/').pop();
     const finalShortUrl = `${baseUrl}/${code}`;
 
@@ -43,7 +43,7 @@ async function shorten() {
   }
 }
 
-// --- Resto de funciones de Reportes e Insights ---
+//  Funciones de Reportes e Insights
 
 async function toggleDetails(url, rowId, searchTerm = "") {
   const detailRow = document.getElementById(`details-${rowId}`);

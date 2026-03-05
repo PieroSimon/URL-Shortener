@@ -23,7 +23,8 @@ exports.shortenUrl = async (req, res) => {
 
     // 3. Generamos el QR (usando el código corto)
     // Usamos una URL temporal para el QR o solo el código
-    const qrCode = await QRCode.toDataURL(shortCode); 
+   const fullUrlForQR = `https://url-shortener-h8b1.onrender.com/${shortCode}`;
+const qrCode = await QRCode.toDataURL(fullUrlForQR);
 
     // 4. RESPUESTA CLAVE: Enviamos el shortCode por separado
     res.json({ 
