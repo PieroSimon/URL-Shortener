@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>URL Shortener Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Shortener Pro | Insights Dashboard</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
-    <h1> Acortador de URLs</h1>
+    <h1>Acortador de URLs</h1>
     <h2 class="subtitle">Insights Dashboard</h2> 
 
     <div class="input-group">
@@ -22,14 +23,14 @@
     </button>
   </div>
 
-  <section id="globalReportsSection" class="reports-section">
+  <section id="globalReportsSection" class="reports-section" style="display:none;">
     <header class="reports-header">
-      <h2 class="reports-title"> Top de URLs y Búsqueda</h2>
-      <button class="btn-export" onclick="downloadCSV()"> Exportar CSV</button>
+      <h2 class="reports-title">Top de URLs y Búsqueda</h2>
+      <button class="btn-export" onclick="downloadCSV()">Exportar CSV</button>
     </header>
     
     <div class="report-controls">
-      <input type="text" id="searchInput" class="search-bar" placeholder="Buscar URL original o codigo..." onkeyup="updateGlobalReports()">
+      <input type="text" id="searchInput" class="search-bar" placeholder="Buscar URL original o código..." onkeyup="updateGlobalReports()">
 
       <div class="filter-group">
         <label>Ordenar:</label>
@@ -39,7 +40,7 @@
         </select>
       </div>
 
-      <button class="btn-success" onclick="updateGlobalReports()"> Refrescar</button>
+      <button class="btn-success" onclick="updateGlobalReports()">Refrescar</button>
     </div>
 
     <div class="table-container">
@@ -55,6 +56,17 @@
       </table>
     </div>
   </section>
+
+  <div id="qrModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closeQRModal()">&times;</span>
+      <h3>Código QR de Campaña</h3>
+      <p id="qrModalUrl" class="muted-text"></p>
+      <div id="qrModalContainer"></div>
+      <br>
+      <a id="downloadQRLink" download="qr-code.png" class="btn-primary">Descargar QR 📥</a>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>
